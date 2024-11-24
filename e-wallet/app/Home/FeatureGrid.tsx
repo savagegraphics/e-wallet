@@ -1,6 +1,5 @@
 'use client'
 
-// import { useEffect, useState } from 'react'
 import { motion } from 'framer-motion'
 import {
   Shield,
@@ -32,13 +31,15 @@ interface FeatureCardProps {
   title: string
   href: string
   clickText: string
+  index: number // Added index to the interface
 }
 
 const FeatureCard = ({
   icon: Icon,
   title,
   href,
-  clickText
+  clickText,
+  index // Added index to the component props
 }: FeatureCardProps) => {
   return (
     <motion.div
@@ -47,7 +48,6 @@ const FeatureCard = ({
     >
       <div className='absolute inset-0 bg-gradient-to-br from-blue-500/0 to-blue-500/0 opacity-0 transition-opacity duration-300 group-hover:opacity-10' />
 
-      {/* Animated background glow */}
       <div className='absolute -inset-x-20 -top-20 -z-10 transform-gpu blur-3xl opacity-0 transition-opacity duration-300 group-hover:opacity-20'>
         <div className='aspect-[1100/200] w-full bg-gradient-to-br from-blue-500 to-blue-600' />
       </div>
@@ -56,18 +56,15 @@ const FeatureCard = ({
         href={href}
         className='flex flex-col items-center justify-center p-6 space-y-4 h-full min-h-[200px]'
       >
-        {/* Icon with glow effect */}
         <motion.div whileHover={{ rotate: 5 }} className='relative p-3'>
           <div className='absolute inset-0 bg-blue-500/20 blur-xl rounded-full opacity-0 group-hover:opacity-100 transition-opacity duration-300' />
           <Icon className='w-10 h-10 text-blue-400 relative z-10' />
         </motion.div>
 
-        {/* Title */}
         <h2 className='text-xl font-mono font-bold text-white text-center'>
           {title}
         </h2>
 
-        {/* Click text with animated underline */}
         <p className='text-sm text-blue-400 relative group-hover:text-blue-300 transition-colors duration-300'>
           {clickText}
           <span className='absolute -bottom-px left-0 w-0 h-px bg-blue-400 transition-all duration-300 group-hover:w-full' />
