@@ -38,9 +38,9 @@ const FeatureCard = ({
   icon: Icon,
   title,
   href,
-  clickText,
-  index // Added index to the component props
-}: FeatureCardProps) => {
+  clickText
+}: // index // Added index to the component props
+FeatureCardProps) => {
   return (
     <motion.div
       whileHover={{ scale: 1.02 }}
