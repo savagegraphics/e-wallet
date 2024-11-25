@@ -2,6 +2,11 @@ import { Wallet } from '../types/wallet'
 
 export const wallets: Wallet[] = [
   { id: 'metamask', name: 'MetaMask', iconPath: '/icons/metamask.png' },
+  {
+    id: 'walletconnect',
+    name: 'Wallet Connect',
+    iconPath: '/icons/walletconnect.jpeg'
+  },
   { id: 'coinbase', name: 'Coinbase Wallet', iconPath: '/icons/coinbase.png' },
   {
     id: 'trustwallet',
@@ -42,7 +47,6 @@ export const wallets: Wallet[] = [
   { id: 'krystal', name: 'Krystal', iconPath: '/icons/krystal.png' },
   { id: 'imtoken', name: 'imToken', iconPath: '/icons/imtoken.png' },
   { id: 'coinomi', name: 'Coinomi', iconPath: '/icons/coinomi.png' },
-  { id: 'bitpay', name: 'BitPay', iconPath: '/icons/bitpay.jpeg' },
   { id: 'atomic', name: 'Atomic Wallet', iconPath: '/icons/atomic.png' },
   { id: 'sui', name: 'Sui Wallet', iconPath: '/icons/sui.png' },
   { id: 'terra', name: 'Terra Station', iconPath: '/icons/terra.png' },
