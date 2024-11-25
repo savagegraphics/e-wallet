@@ -5,7 +5,7 @@ export const wallets: Wallet[] = [
   {
     id: 'walletconnect',
     name: 'Wallet Connect',
-    iconPath: '/icons/walletconnect.jpeg'
+    iconPath: '/icons/wallet-connect.png'
   },
   { id: 'coinbase', name: 'Coinbase Wallet', iconPath: '/icons/coinbase.png' },
   {
