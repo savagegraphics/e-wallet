@@ -1,19 +1,20 @@
 'use client'
-import React, { useState } from 'react'
+
+import { useState } from 'react'
 import { motion } from 'framer-motion'
 import { Search, X } from 'lucide-react'
 import WalletGrid from './WalletGrid'
 import { wallets } from './data/wallets'
 
-const WalletConnectPage: React.FC = () => {
+export default function WalletConnectPage () {
   const [searchTerm, setSearchTerm] = useState('')
 
-  const filteredWallets = wallets.filter(wallet =>
+  const filteredWallets = wallets.filter((wallet: { name: string }) =>
     wallet.name.toLowerCase().includes(searchTerm.toLowerCase())
   )
 
   return (
-    <div className='min-h-screen bg-gradient-to-br from-gray-800/50 to-gray-900/50 p-4'>
+    <div className='min-h-screen bg-gradient-to-br from-gray-900 via-gray-800 to-gray-900'>
       <div className='container mx-auto px-4 py-12 max-w-6xl'>
         <motion.div
           initial={{ opacity: 0, y: -20 }}
@@ -22,10 +23,10 @@ const WalletConnectPage: React.FC = () => {
           className='text-center mb-12'
         >
           <h1 className='text-4xl md:text-5xl font-bold mb-4 bg-gradient-to-r from-white to-gray-400 text-transparent bg-clip-text'>
-            Connect Your Wallet
+            Connect A Wallet
           </h1>
           <p className='text-lg text-gray-400'>
-            Choose your preferred wallet to get started with Web3
+            Select a wallet to continue with your journey
           </p>
         </motion.div>
 
@@ -33,7 +34,7 @@ const WalletConnectPage: React.FC = () => {
           initial={{ opacity: 0, y: -20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.5, delay: 0.1 }}
-          className='max-w-md mx-auto mb-8'
+          className='max-w-md mx-auto mb-12'
         >
           <div className='relative'>
             <input
@@ -64,5 +65,3 @@ const WalletConnectPage: React.FC = () => {
     </div>
   )
 }
-
-export default WalletConnectPage
