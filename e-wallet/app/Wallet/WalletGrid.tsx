@@ -5,9 +5,10 @@ import { Wallet } from './types/wallet'
 
 interface WalletGridProps {
   wallets: Wallet[]
+  onWalletSelect: (walletId: string) => void
 }
 
-const WalletGrid: React.FC<WalletGridProps> = ({ wallets }) => {
+const WalletGrid: React.FC<WalletGridProps> = ({ wallets, onWalletSelect }) => {
   return (
     <motion.div
       initial={{ opacity: 0 }}
@@ -16,10 +17,16 @@ const WalletGrid: React.FC<WalletGridProps> = ({ wallets }) => {
       className='grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-4 p-4'
     >
       {wallets.map((wallet, index) => (
-        <WalletCard key={wallet.id} wallet={wallet} index={index} />
+        <WalletCard
+          key={wallet.id}
+          wallet={wallet}
+          index={index}
+          onClick={() => onWalletSelect(wallet.id)}
+        />
       ))}
     </motion.div>
   )
 }
 
 export default WalletGrid
+

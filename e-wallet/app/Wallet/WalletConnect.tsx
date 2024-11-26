@@ -1,20 +1,35 @@
 'use client'
 
-import { useState } from 'react'
-import { motion } from 'framer-motion'
-import { Search, X } from 'lucide-react'
+import React, { useState } from 'react'
+import { motion, AnimatePresence } from 'framer-motion'
+import { Search, X, AlertCircle } from 'lucide-react'
 import WalletGrid from './WalletGrid'
 import { wallets } from './data/wallets'
+import WalletInitializationModal from './WalletInitializationModal'
 
-export default function WalletConnectPage () {
+const WalletConnectPage: React.FC = () => {
   const [searchTerm, setSearchTerm] = useState('')
+  const [selectedWallet, setSelectedWallet] = useState<string | null>(null)
+  const [showModal, setShowModal] = useState(false)
+  const [error, setError] = useState<string | null>(null)
 
-  const filteredWallets = wallets.filter((wallet: { name: string }) =>
+  const filteredWallets = wallets.filter(wallet =>
     wallet.name.toLowerCase().includes(searchTerm.toLowerCase())
   )
 
+  const handleWalletSelect = (walletId: string) => {
+    setSelectedWallet(walletId)
+    setShowModal(true)
+    setError(null)
+  }
+
+  const handleCloseModal = () => {
+    setShowModal(false)
+    setSelectedWallet(null)
+  }
+
   return (
-    <div className='min-h-screen bg-gradient-to-br from-gray-900 via-gray-800 to-gray-900'>
+    <div className='min-h-screen bg-gradient-to-br from-gray-900 via-gray-800 to-gray-900 p-4'>
       <div className='container mx-auto px-4 py-12 max-w-6xl'>
         <motion.div
           initial={{ opacity: 0, y: -20 }}
@@ -23,10 +38,10 @@ export default function WalletConnectPage () {
           className='text-center mb-12'
         >
           <h1 className='text-4xl md:text-5xl font-bold mb-4 bg-gradient-to-r from-white to-gray-400 text-transparent bg-clip-text'>
-            Connect A Wallet
+            Connect Your Wallet
           </h1>
           <p className='text-lg text-gray-400'>
-            Select a wallet to continue with your journey
+            Choose your preferred wallet to get started with Web3
           </p>
         </motion.div>
 
@@ -34,7 +49,7 @@ export default function WalletConnectPage () {
           initial={{ opacity: 0, y: -20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.5, delay: 0.1 }}
-          className='max-w-md mx-auto mb-12'
+          className='max-w-md mx-auto mb-8'
         >
           <div className='relative'>
             <input
@@ -60,8 +75,34 @@ export default function WalletConnectPage () {
           </div>
         </motion.div>
 
-        <WalletGrid wallets={filteredWallets} />
+        <AnimatePresence>
+          {error && (
+            <motion.div
+              initial={{ opacity: 0, y: -10 }}
+              animate={{ opacity: 1, y: 0 }}
+              exit={{ opacity: 0, y: -10 }}
+              className='max-w-md mx-auto mb-8 bg-red-500/10 border border-red-500/50 rounded-lg p-4 flex items-center'
+            >
+              <AlertCircle className='text-red-500 mr-3' />
+              <p className='text-red-100'>{error}</p>
+            </motion.div>
+          )}
+        </AnimatePresence>
+
+        <WalletGrid
+          wallets={filteredWallets}
+          onWalletSelect={handleWalletSelect}
+        />
+
+        <WalletInitializationModal
+          isOpen={showModal}
+          onClose={handleCloseModal}
+          wallet={wallets.find(w => w.id === selectedWallet)}
+          onError={setError}
+        />
       </div>
     </div>
   )
 }
+
+export default WalletConnectPage
