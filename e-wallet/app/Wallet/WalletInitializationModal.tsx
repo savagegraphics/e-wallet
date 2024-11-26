@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
-import { X, LoaderPinwheel, AlertTriangle } from 'lucide-react'
+import { X, LoaderPinwheel } from 'lucide-react'
 import { useRouter } from 'next/navigation'
 import { Wallet } from './types/wallet'
 
