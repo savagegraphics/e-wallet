@@ -37,7 +37,7 @@ export const wallets: Wallet[] = [
     name: 'TokenPocket',
     iconPath: '/icons/TokenPocket.avif'
   },
-  { id: 'keplr', name: 'Keplr Wallet', iconPath: '/icons/Keplr.png' },
+  { id: 'backpack', name: 'Backpack', iconPath: '/icons/Backpack.avif' },
   { id: 'enkrypt', name: 'Enkrypt', iconPath: '/icons/Enkrypt.svg' },
   {
     id: 'ledger-live',
