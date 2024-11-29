@@ -11,7 +11,7 @@ export const wallets: Wallet[] = [
   {
     id: 'trustwallet',
     name: 'Trust Wallet',
-    iconPath: '/icons/trustwallet.png'
+    iconPath: '/icons/Trust.jpeg'
   },
   {
     id: 'blockchain',
