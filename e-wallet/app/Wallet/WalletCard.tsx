@@ -26,7 +26,7 @@ const WalletCard: React.FC<WalletCardProps> = ({ wallet, index, onClick }) => {
           alt={wallet.name}
           width={48}
           height={48}
-          className={`w-12 h-12 ${wallet.className || ''}`}
+          className={`w-12 h-12 rounded-md ${wallet.className || ''}`}
         />
       </div>
       <h3 className='text-sm font-medium text-gray-200 text-center'>
@@ -37,4 +37,3 @@ const WalletCard: React.FC<WalletCardProps> = ({ wallet, index, onClick }) => {
 }
 
 export default WalletCard
-
