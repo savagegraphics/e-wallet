@@ -31,7 +31,7 @@ export const wallets: Wallet[] = [
     iconPath: '/icons/Crypto.com.jpeg'
   },
   { id: 'okxwallet', name: 'OKX Wallet', iconPath: '/icons/OKXWallet.avif' },
-  { id: 'safepal', name: 'SafePal', iconPath: '/icons/SafePal.png' },
+  { id: 'safepal', name: 'SafePal', iconPath: '/icons/safepal.png' },
   {
     id: 'tokenpocket',
     name: 'TokenPocket',
