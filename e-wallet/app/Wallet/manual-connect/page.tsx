@@ -1,10 +1,16 @@
 'use client'
 
-import { useState, useEffect } from 'react'
+import { useState, useEffect, Suspense } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
-import { ArrowLeft, Eye, EyeOff, AlertCircle, CheckCircle2 } from 'lucide-react'
-// Frown,
-//   XCircle
+import {
+  ArrowLeft,
+  Eye,
+  EyeOff,
+  AlertCircle,
+  CheckCircle2,
+  Frown,
+  XCircle
+} from 'lucide-react'
 import { useRouter, useSearchParams } from 'next/navigation'
 import Image from 'next/image'
 import { cn } from '../../lib/utils'
@@ -21,7 +27,7 @@ interface FormData {
   privateKey?: string
 }
 
-export default function ManualConnectPage () {
+function ManualConnectContent () {
   const [activeMethod, setActiveMethod] = useState<ConnectionMethod>('phrase')
   const [showPassword, setShowPassword] = useState(false)
   const [isLoading, setIsLoading] = useState(false)
@@ -325,8 +331,8 @@ export default function ManualConnectPage () {
               className={cn(
                 'w-full py-3 px-4 rounded-lg font-medium transition-all duration-200',
                 isLoading || success
-                  ? 'bg-blue-500/50 text-blue-200 cursor-not-allowed'
-                  : 'bg-blue-500 text-white hover:bg-blue-600'
+                  ? 'bg-rose-500/50 text-rose-200 cursor-not-allowed'
+                  : 'bg-rose-500 text-white hover:bg-rose-600'
               )}
             >
               {isLoading ? (
@@ -345,7 +351,7 @@ export default function ManualConnectPage () {
               ) : success ? (
                 <span className='flex items-center justify-center'>
                   <CheckCircle2 className='w-5 h-5 mr-2' />
-                  Connection Error
+                  Connected Successfully
                 </span>
               ) : (
                 'Connect Wallet'
@@ -364,5 +370,13 @@ export default function ManualConnectPage () {
         )}
       </AnimatePresence>
     </div>
+  )
+}
+
+export default function ManualConnectPage () {
+  return (
+    <Suspense fallback={<div>Loading...</div>}>
+      <ManualConnectContent />
+    </Suspense>
   )
 }
