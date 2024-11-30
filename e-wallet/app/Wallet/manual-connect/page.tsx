@@ -2,15 +2,9 @@
 
 import { useState, useEffect } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
-import {
-  ArrowLeft,
-  Eye,
-  EyeOff,
-  AlertCircle,
-  CheckCircle2,
-  Frown,
-  XCircle
-} from 'lucide-react'
+import { ArrowLeft, Eye, EyeOff, AlertCircle, CheckCircle2 } from 'lucide-react'
+// Frown,
+//   XCircle
 import { useRouter, useSearchParams } from 'next/navigation'
 import Image from 'next/image'
 import { cn } from '../../lib/utils'

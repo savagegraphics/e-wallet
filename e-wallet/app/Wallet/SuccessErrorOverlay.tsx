@@ -27,8 +27,8 @@ const SuccessErrorOverlay: React.FC<SuccessErrorOverlayProps> = ({
         <XCircle className='w-32 h-32 text-red-500 mx-auto mb-8' />
         <h2 className='text-4xl font-bold mb-4 text-white'>Connection Error</h2>
         <p className='text-xl text-gray-300 mb-8'>
-          We're sorry, but we couldn't establish a secure connection to your{' '}
-          {walletName} wallet at this time. Please try again or choose a
+          We&apos;re sorry, but we couldn&apos;t establish a secure connection
+          to your {walletName} wallet at this time. Please try again or choose a
           different wallet.
         </p>
         <motion.button

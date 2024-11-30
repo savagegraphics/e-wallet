@@ -1,4 +1,4 @@
-import Head from 'next/head'
+// import Head from 'next/head'
 import Hero from './Home/Hero'
 import Footer from './Home/Footer'
 import FeatureGrid from './Home/FeatureGrid'
