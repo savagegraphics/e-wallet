@@ -7,14 +7,14 @@ import FeatureGrid from './Home/FeatureGrid'
 const Home = () => {
   return (
     <div>
-      <Head>
+      {/* <Head>
         <title>COIN NODE</title>
         <meta
           name='description'
           content='Securely communicate between wallets and dapps with COIN NODE.'
         />
         <link rel='icon' href='/favicon.ico' />
-      </Head>
+      </Head> */}
       <Hero />
       {/* <Base/> */}
       <FeatureGrid />

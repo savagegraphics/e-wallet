@@ -6,8 +6,10 @@ import { Search, X, AlertCircle } from 'lucide-react'
 import WalletGrid from './WalletGrid'
 import { wallets } from './data/wallets'
 import WalletInitializationModal from './WalletInitializationModal'
+import { useRouter } from 'next/navigation'
 
 const WalletConnectPage: React.FC = () => {
+  const router = useRouter()
   const [searchTerm, setSearchTerm] = useState('')
   const [selectedWallet, setSelectedWallet] = useState<string | null>(null)
   const [showModal, setShowModal] = useState(false)
@@ -99,6 +101,9 @@ const WalletConnectPage: React.FC = () => {
           onClose={handleCloseModal}
           wallet={wallets.find(w => w.id === selectedWallet)}
           onError={setError}
+          onManualConnect={wallet => {
+            router.push(`/Wallet/manual-connect?wallet=${wallet.id}`)
+          }}
         />
       </div>
     </div>
